@@ -5,6 +5,10 @@ express = require('express');
 
 router = express.Router();
 
+router.get('/letters', function(req, res, next) {
+  return res.sendfile('./public/letters.json');
+});
+
 router.get('*', function(req, res, next) {
   return res.render('index', {
     title: 'Typewriter'
