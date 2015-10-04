@@ -109,6 +109,26 @@ stocksApp.controller('drawingController', function($scope, $window) {
     "z": {
       "width": 30,
       "points": [[5, 25], [21, 25], [13, 35], [5, 44], [21, 44]]
+    },
+    " ": {
+      "width": 30,
+      "points": []
+    },
+    ".": {
+      "width": 30,
+      "points": [[12, 43], [13, 44], [14, 43], [13, 42]]
+    },
+    ",": {
+      "width": 30,
+      "points": [[14, 43], [13, 42], [12, 43], [13, 44], [14, 43], [13, 46]]
+    },
+    "!": {
+      "width": 30,
+      "points": [[14, 5], [10, 9], [11, 24], [12, 38], [10, 41], [12, 44], [15, 43], [14, 39], [13, 36], [18, 22], [18, 8], [14, 5]]
+    },
+    "?": {
+      "width": 30,
+      "points": [[4, 14], [8, 6], [16, 6], [21, 10], [21, 18], [14, 25], [13, 37], [11, 39], [14, 42], [16, 40], [13, 37]]
     }
   };
   $scope.text = '';
@@ -139,7 +159,10 @@ stocksApp.controller('drawingController', function($scope, $window) {
       absWidthCount = 0;
       heightCount++;
     }
-    if (letters[letter]) {
+    if (letter === '\n') {
+      absWidthCount = 0;
+      return heightCount++;
+    } else if (letters[letter]) {
       drawLetter(letters[letter].points);
       return absWidthCount += letters[letter].width;
     } else {
