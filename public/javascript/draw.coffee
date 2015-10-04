@@ -2,48 +2,50 @@
 stocksApp = angular.module('drawingApp', [])
 
 
-stocksApp.controller 'drawingController', ($scope) ->
+stocksApp.controller 'drawingController', ($scope, $window) ->
 
     $scope.text = ''
-    globX = 30
-    globY = 50
+    widthCount = 0
+    heightCount = 0
+
     CHARWIDTH = 30
     CHARHEIGHT = 50
     SPACEWIDTH = 10
-    BADNESS = 2
+    BADNESS = 10
+    canvas = document.getElementById('canvas')
+    ctx = canvas.getContext('2d')
 
     $scope.update = ->
-        points = [[20,30],[10,30],[10,45],[20,45],[20,30],[20,57]]
-        drawLetter(points)
+        resetCanvas()
+        draw(letter) for letter in $scope.text
 
-    $scope.doClick = (event) ->
-        x = event.clientX
-        y = event.clientY
-        offsetX = event.offsetX
-        offsetY = event.offsetY
-        #/ These are the 2 new lines, see you target the canvas element then apply it to getContext
-        canvasElement = document.getElementById('canvas')
-        ctx = canvasElement.getContext('2d')
-        #draw a circle
-        ctx.beginPath()
-        ctx.arc x, y, 10, 0, Math.PI * 2, true
-        ctx.closePath()
-        ctx.fill()
+    resetCanvas = ->
+        widthCount = heightCount = 0
+        ctx.clearRect(0, 0, 1000, 800)
+
+    draw = (letter) ->
+        points = []
+        if letter == 'a'
+            points = [[20,30],[10,30],[10,45],[20,45],[20,30],[20,57]]
+        drawLetter(points)
+        widthCount++
+        if widthCount == 25
+            widthCount = 0
+            heightCount++
 
     drawLetter = (points) ->
-
-        canvasElement = document.getElementById('canvas')
-        ctx = canvasElement.getContext('2d')
-
+        ctx.beginPath()
         for i in [0...points.length]
             xShift = (Math.random() - 0.5) * BADNESS
             yShift = (Math.random() - 0.5) * BADNESS
-            points[i][0] += xShift + globX
-            points[i][1] += yShift + globY
+            points[i][0] += xShift + (widthCount * (CHARWIDTH + SPACEWIDTH))
+            points[i][1] += yShift + (heightCount * (CHARHEIGHT + SPACEWIDTH))
 
             if i == 0
                 ctx.moveTo(points[i][0], points[i][1])
             else
                 ctx.lineTo(points[i][0], points[i][1])
-        
         ctx.stroke()
+
+    $scope.$watch 'window.innerWidth', ->
+        canvas.width = window.innerWidth - 150
