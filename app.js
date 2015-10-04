@@ -13,7 +13,9 @@ app.set('views', __dirname + '/views');
 
 app.set('view engine', 'jade');
 
-app.use(express["static"]('server/public'));
+app.use(express["static"]('public'));
+
+app.use(express["static"]('node_modules/angular'));
 
 app.use(logger('dev'));
 

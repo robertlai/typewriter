@@ -1,5 +1,9 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}
+    script(type='text/javascript' src='/javascript/draw.js')
+    div(ng-app='drawingApp' ng-controller='drawingController')
+        h1= title
+        p Welcome to #{title}
+        textarea(id='inputArea' ng-model='text' ng-change='update()')
+        canvas(id='canvas' ng-click='doClick($event)' width='600' height= '600')
