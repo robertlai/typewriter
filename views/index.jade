@@ -5,6 +5,8 @@ block content
     div(ng-app='drawingApp' ng-controller='drawingController')
         h1= title
         p Welcome to #{title}
-        textarea(id='inputArea' ng-model='text' ng-change='update()')
-        p
-        canvas(id='canvas' height= '800' style="border:5px solid #000000;")
+        section
+            #leftBox
+                textarea.textBox(id='inputArea' ng-model='text' ng-change='update()' autofocus)
+            #rightBox
+                canvas(id='canvas' height= '600' )
