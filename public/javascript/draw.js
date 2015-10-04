@@ -4,7 +4,7 @@ var stocksApp;
 stocksApp = angular.module('drawingApp', []);
 
 stocksApp.controller('drawingController', function($scope, $window) {
-  var BADNESS, CHARHEIGHT, SPACEWIDTH, absWidthCount, canvas, ctx, draw, drawLetter, heightCount, letters, resetCanvas;
+  var CHARHEIGHT, SPACEWIDTH, absWidthCount, canvas, ctx, draw, drawLetter, heightCount, letters, resetCanvas;
   letters = {
     "a": {
       "width": 30,
@@ -112,11 +112,11 @@ stocksApp.controller('drawingController', function($scope, $window) {
     }
   };
   $scope.text = '';
+  $scope.badness = 5;
   absWidthCount = 0;
   heightCount = 0;
   SPACEWIDTH = 30;
   CHARHEIGHT = 50;
-  BADNESS = 5;
   canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
   $scope.update = function() {
@@ -150,8 +150,8 @@ stocksApp.controller('drawingController', function($scope, $window) {
     var i, j, ref, x, xShift, y, yShift;
     ctx.beginPath();
     for (i = j = 0, ref = points.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
-      xShift = (Math.random() - 0.5) * BADNESS;
-      yShift = (Math.random() - 0.5) * BADNESS;
+      xShift = (Math.random() - 0.5) * $scope.badness;
+      yShift = (Math.random() - 0.5) * $scope.badness;
       x = points[i][0] + xShift + absWidthCount + 25;
       y = points[i][1] + yShift + (heightCount * CHARHEIGHT);
       if (i === 0) {

@@ -4,7 +4,11 @@ block content
     script(type='text/javascript' src='/javascript/draw.js')
     div(ng-app='drawingApp' ng-controller='drawingController')
         h1= title
-        p Welcome to #{title}
+        h3 CoNvErT yOuR tYpE tO wRiTe :)
+        p
+        h5 How Bad?
+        input(type='number' ng-model='badness' ng-change='update()')
+        p
         section
             #leftBox
                 textarea.textBox(id='inputArea' ng-model='text' ng-change='update()' autofocus)
